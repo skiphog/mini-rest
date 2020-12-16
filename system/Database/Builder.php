@@ -135,6 +135,25 @@ class Builder
     }
 
     /**
+     * @noinspection PhpUndefinedVariableInspection
+     * @noinspection PhpUndefinedFieldInspection
+     *
+     * @param string $table
+     * @param string $column
+     * @param        $param
+     *
+     * @return $this
+     */
+    public function join(string $table, string $column, $param): self
+    {
+        $this->query->join($table, 'id', $column)
+            ->on()
+            ->equals($this->className::$manyKeyThrow, $param);
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function all()

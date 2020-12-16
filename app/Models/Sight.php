@@ -6,14 +6,28 @@ use System\Database\Model;
 
 class Sight extends Model
 {
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'city_id',
         'name',
         'distance'
     ];
 
+    /**
+     * @var string
+     */
     public static $manyKey = 'city_id';
 
+    /**
+     * @var string
+     */
+    public static $manyKeyThrow = 'user_id';
+
+    /**
+     * @var string
+     */
     public static $table = 'sights';
 
     public function setCityId($value): int
@@ -26,8 +40,8 @@ class Sight extends Model
         return $this->{'distance'} = (int)$value;
     }
 
-    public function setRating($value): int
+    public function setRating($value): ?int
     {
-        return $this->{'rating'} = (int)$value;
+        return $this->{'rating'} = empty($value) ? null : (int)$value;
     }
 }

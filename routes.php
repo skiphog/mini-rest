@@ -50,5 +50,6 @@ $route->group('/users', static function (Router $router) {
     $router->post('/{id:\d+}/update', 'User\UserController@update');
     $router->post('/{id:\d+}/delete', 'User\UserController@delete');
 
-    // 
+    // Достопримечательности, которые посетил user
+    $router->get('/{id:\d+}/sights', 'User\UserSightController@show');
 });

@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use System\Database\Model;
-use System\Database\ActiveRecord;
 
 class User extends Model
 {
-    use ActiveRecord;
+    protected $fillable = [
+        'name',
+    ];
 
-    protected static $table = 'users';
+    public static $table = 'users';
 }
