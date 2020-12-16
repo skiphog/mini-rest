@@ -53,3 +53,6 @@ $route->group('/users', static function (Router $router) {
     // Достопримечательности, которые посетил user
     $router->get('/{id:\d+}/sights', 'User\UserSightController@show');
 });
+
+// Путешествия
+$route->post('/travelings', 'User\UserTravelController@create');

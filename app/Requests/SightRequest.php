@@ -27,7 +27,7 @@ class SightRequest extends FormRequest
 
         return [
             'id'       => 'required|positive|exists:sights',
-            'city_id'  => 'positive|custom:City',
+            'city_id'  => 'positive|custom:EntityExists~cities',
             'name'     => 'str|between:2,150',
             'distance' => 'positive'
         ];
