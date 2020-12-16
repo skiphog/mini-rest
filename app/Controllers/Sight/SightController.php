@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Controllers\City;
+namespace App\Controllers\Sight;
 
-use App\Models\City;
+use App\Models\Sight;
 use System\Http\Response;
 use App\Filters\SightFilter;
-use App\Requests\CityRequest;
+use App\Requests\SightRequest;
 use System\Foundation\Controller;
 use System\Http\Exceptions\NotFoundException;
 
-class CityController extends Controller
+class SightController extends Controller
 {
     /**
      * @param SightFilter $filter
@@ -18,11 +18,11 @@ class CityController extends Controller
      */
     public function index(SightFilter $filter): Response
     {
-        $cities = City::select()
+        $sights = Sight::select()
             ->withFilter($filter)
             ->all();
 
-        return json($cities);
+        return json($sights);
     }
 
     /**
@@ -33,37 +33,37 @@ class CityController extends Controller
      */
     public function show($id): Response
     {
-        $city = City::select()
+        $sight = Sight::select()
             ->where(['id' => $id])
             ->one();
 
-        if (!$city) {
-            throw new NotFoundException('Нет такого города');
+        if (!$sight) {
+            throw new NotFoundException('Нет такой достопримечательности');
         }
 
-        return json($city);
+        return json($sight);
     }
 
     /**
-     * @param CityRequest $request
+     * @param SightRequest $request
      *
      * @return Response
      */
-    public function create(CityRequest $request): Response
+    public function create(SightRequest $request): Response
     {
-        $id = City::create($request);
+        $id = Sight::create($request);
 
         return json(['id' => $id], 201);
     }
 
     /**
-     * @param CityRequest $request
+     * @param SightRequest $request
      *
      * @return Response
      */
-    public function update(CityRequest $request): Response
+    public function update(SightRequest $request): Response
     {
-        $city = City::select()
+        $city = Sight::select()
             ->where(['id' => $request->input('id')])
             ->one();
 

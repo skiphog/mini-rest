@@ -2,7 +2,7 @@
 
 namespace App\Filters;
 
-class CitySightFilter extends Filter
+class SightFilter extends Filter
 {
     protected $filters = [
         'order',

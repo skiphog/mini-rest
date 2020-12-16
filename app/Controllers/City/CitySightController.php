@@ -5,7 +5,7 @@ namespace App\Controllers\City;
 use App\Models\City;
 use App\Models\Sight;
 use System\Http\Response;
-use App\Filters\CitySightFilter;
+use App\Filters\SightFilter;
 use System\Foundation\Controller;
 use App\Requests\CitySightRequest;
 
@@ -24,11 +24,11 @@ class CitySightController extends Controller
 
     /**
      * @param CitySightRequest $request
-     * @param CitySightFilter  $filter
+     * @param SightFilter  $filter
      *
      * @return Response
      */
-    public function show(CitySightRequest $request, CitySightFilter $filter): Response
+    public function show(CitySightRequest $request, SightFilter $filter): Response
     {
         $sights = Sight::select()
             ->withFilter($filter)

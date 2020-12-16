@@ -6,6 +6,12 @@ use System\Database\Model;
 
 class Sight extends Model
 {
+    protected $fillable = [
+        'city_id',
+        'name',
+        'distance'
+    ];
+
     public static $manyKey = 'city_id';
 
     public static $table = 'sights';

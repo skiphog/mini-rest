@@ -30,6 +30,7 @@ $route->group('/cities', static function (Router $router) {
 $route->group('/sights', static function (Router $router) {
     // GET Получить все достопримечательности какие есть
     $router->get('/', 'Sight\SightController@index');
+    $router->get('/{id:\d+}', 'Sight\SightController@show');
 
     // POST Создать, Обновить, Удалить достопримечательность
     $router->post('/', 'Sight\SightController@create');
