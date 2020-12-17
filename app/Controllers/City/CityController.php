@@ -6,6 +6,7 @@ use App\Models\City;
 use System\Http\Response;
 use App\Filters\SightFilter;
 use App\Requests\CityRequest;
+use App\Requests\DestroyRequest;
 use System\Foundation\Controller;
 use System\Http\Exceptions\NotFoundException;
 
@@ -71,5 +72,21 @@ class CityController extends Controller
             ->update();
 
         return json($city);
+    }
+
+    /**
+     * @param DestroyRequest $request
+     *
+     * @return Response
+     */
+    public function delete(DestroyRequest $request): Response
+    {
+        $city = City::select()
+            ->where(['id' => $request->input('id')])
+            ->one();
+
+        $result = $city->delete();
+
+        return json(['result' => $result]);
     }
 }

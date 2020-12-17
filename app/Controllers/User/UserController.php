@@ -5,6 +5,7 @@ namespace App\Controllers\User;
 use App\Models\User;
 use System\Http\Response;
 use App\Requests\UserRequest;
+use App\Requests\DestroyRequest;
 use System\Foundation\Controller;
 use System\Http\Exceptions\NotFoundException;
 
@@ -39,6 +40,7 @@ class UserController extends Controller
 
         return json($sight);
     }
+
     /**
      * @param UserRequest $request
      *
@@ -66,5 +68,21 @@ class UserController extends Controller
             ->update();
 
         return json($user);
+    }
+
+    /**
+     * @param DestroyRequest $request
+     *
+     * @return Response
+     */
+    public function delete(DestroyRequest $request): Response
+    {
+        $user = User::select()
+            ->where(['id' => $request->input('id')])
+            ->one();
+
+        $result = $user->delete();
+
+        return json(['result' => $result]);
     }
 }

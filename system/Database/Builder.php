@@ -111,13 +111,21 @@ class Builder
      * @noinspection PhpUndefinedVariableInspection
      * @noinspection PhpUndefinedFieldInspection
      *
-     * @return $this
+     * @param Model $model
+     *
+     * @return bool
      */
-    public function delete(): Builder
+    public function delete(Model $model): bool
     {
-        $this->query = $this->builder->delete($this->className::$table);
+        $this->query = $this->builder
+            ->delete($this->className::$table)
+            ->where()
+            ->equals('id', $model->id)
+            ->end();
 
-        return $this;
+        return db()
+            ->prepare($this->builder->write($this->query))
+            ->execute($this->builder->getValues());
     }
 
     public function where(array $params)

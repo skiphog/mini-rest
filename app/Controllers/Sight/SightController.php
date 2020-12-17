@@ -6,6 +6,7 @@ use App\Models\Sight;
 use System\Http\Response;
 use App\Filters\SightFilter;
 use App\Requests\SightRequest;
+use App\Requests\DestroyRequest;
 use System\Foundation\Controller;
 use System\Http\Exceptions\NotFoundException;
 
@@ -71,5 +72,21 @@ class SightController extends Controller
             ->update();
 
         return json($sight);
+    }
+
+    /**
+     * @param DestroyRequest $request
+     *
+     * @return Response
+     */
+    public function delete(DestroyRequest $request): Response
+    {
+        $sight = Sight::select()
+            ->where(['id' => $request->input('id')])
+            ->one();
+
+        $result = $sight->delete();
+
+        return json(['result' => $result]);
     }
 }

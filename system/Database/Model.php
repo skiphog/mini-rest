@@ -50,6 +50,15 @@ abstract class Model
     }
 
     /**
+     * @return bool
+     */
+    public function delete(): bool
+    {
+        return (new Builder(static::class))
+            ->delete($this);
+    }
+
+    /**
      * Заполняет модель значениями
      *
      * @param iterable $data
