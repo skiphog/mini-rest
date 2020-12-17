@@ -63,12 +63,13 @@ class SightController extends Controller
      */
     public function update(SightRequest $request): Response
     {
-        $city = Sight::select()
+        $sight = Sight::select()
             ->where(['id' => $request->input('id')])
             ->one();
 
-        $city->update($request);
+        $sight->fill($request)
+            ->update();
 
-        return json($city);
+        return json($sight);
     }
 }

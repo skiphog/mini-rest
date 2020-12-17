@@ -58,12 +58,13 @@ class UserController extends Controller
      */
     public function update(UserRequest $request): Response
     {
-        $city = User::select()
+        $user = User::select()
             ->where(['id' => $request->input('id')])
             ->one();
 
-        $city->update($request);
+        $user->fill($request)
+            ->update();
 
-        return json($city);
+        return json($user);
     }
 }

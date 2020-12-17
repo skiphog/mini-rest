@@ -67,7 +67,8 @@ class CityController extends Controller
             ->where(['id' => $request->input('id')])
             ->one();
 
-        $city->update($request);
+        $city->fill($request)
+            ->update();
 
         return json($city);
     }

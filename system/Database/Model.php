@@ -37,13 +37,13 @@ abstract class Model
     }
 
     /**
-     * @param FormRequest $request
+     * @param FormRequest|null $request
      *
      * @return Model
      */
-    public function update(FormRequest $request): Model
+    public function update(?FormRequest $request = null): Model
     {
-        $this->fill($request);
+        null !== $request && $this->fill($request);
 
         return (new Builder(static::class))
             ->update($this);
