@@ -28,22 +28,19 @@ class ApiExceptionsMiddleware extends ExceptionsMiddleware
      */
     protected function generateError(Throwable $e)
     {
-        $code = $this->getStatusCode($e);
-
         if (isLocal()) {
-            return $this->generateDebug($code, $e);
+            return $this->generateDebug($e);
         }
 
-        return $this->generateProduction($code);
+        return $this->generateProduction($e);
     }
 
     /**
-     * @param int $code
      * @param Throwable $e
      *
      * @return mixed
      */
-    protected function generateDebug(int $code, Throwable $e)
+    protected function generateDebug(Throwable $e)
     {
         return json([
             'except'  => get_class($e),
@@ -51,16 +48,18 @@ class ApiExceptionsMiddleware extends ExceptionsMiddleware
             'line'    => $e->getLine(),
             'file'    => $e->getFile(),
             'code'    => $e->getCode(),
-        ], $code);
+        ], $this->getStatusCode($e));
     }
 
     /**
-     * @param int $code
+     * @param Throwable $e
      *
      * @return mixed
      */
-    protected function generateProduction(int $code)
+    protected function generateProduction(Throwable $e)
     {
+        $code = $this->getStatusCode($e);
+
         return json([
             'message' => 'Something went wrong',
             'code'    => $code,

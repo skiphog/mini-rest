@@ -39,7 +39,7 @@ class CityController extends Controller
             ->one();
 
         if (!$city) {
-            throw new NotFoundException('Нет такого города');
+            throw new NotFoundException('City not found');
         }
 
         return json($city);

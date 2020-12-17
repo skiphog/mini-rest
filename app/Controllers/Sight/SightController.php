@@ -39,7 +39,7 @@ class SightController extends Controller
             ->one();
 
         if (!$sight) {
-            throw new NotFoundException('User not found');
+            throw new NotFoundException('Sight not found');
         }
 
         return json($sight);
