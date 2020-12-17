@@ -25,6 +25,11 @@ class Builder
      */
     protected $query;
 
+    /**
+     * @var array Костыль
+     */
+    protected $nested = [];
+
 
     /**
      * @var string
@@ -69,7 +74,7 @@ class Builder
     {
         $this->query = $this->builder
             ->insert($this->className::$table)
-            ->setValues($request->post());
+            ->setValues($request->input());
 
         $stmt = db()
             ->prepare($this->builder->write($this->query));
@@ -154,6 +159,25 @@ class Builder
     }
 
     /**
+     * @noinspection PhpUndefinedFieldInspection
+     */
+    public function joinOn($table, $join, $column)
+    {
+        $this->nested["`{$this->className::$table}`.`{$table}_id`"] = $join;
+
+        $this->query->join($table, $table . '_id', $column);
+
+        return $this;
+    }
+
+    public function equals(string $table, string $column, $param)
+    {
+        $this->query->join($table)->on()->equals($column, $param);
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function all()
@@ -164,6 +188,16 @@ class Builder
         return $stmt->fetchAll(PDO::FETCH_CLASS, $this->className);
     }
 
+    public function distinct()
+    {
+        $this->query->distinct();
+
+        return $this;
+    }
+
+    /**
+     * @noinspection PhpPossiblePolymorphicInvocationInspection
+     */
     public function withModel(string $model)
     {
         $keys = array_column($first = $this->all(), 'id');
@@ -203,6 +237,10 @@ class Builder
             $this->query = $this->query->end();
         }
 
+        if (!empty($this->nested)) {
+            return $this->crutchResult();
+        }
+
         return $this->builder->write($this->query);
     }
 
@@ -216,5 +254,13 @@ class Builder
         $this->query = $filter->apply($this->query);
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    private function crutchResult(): string
+    {
+        return strtr($this->builder->write($this->query), $this->nested);
     }
 }

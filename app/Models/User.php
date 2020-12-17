@@ -11,4 +11,9 @@ class User extends Model
     ];
 
     public static $table = 'users';
+
+    /**
+     * @var string
+     */
+    public static $manyKeyThrow = 'user_id';
 }

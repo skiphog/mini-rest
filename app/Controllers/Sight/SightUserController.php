@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Controllers\City;
+namespace App\Controllers\Sight;
 
 use App\Models\User;
 use App\Filters\UserFilter;
-use App\Requests\CityUserRequest;
 use System\Foundation\Controller;
+use App\Requests\SightUserRequest;
 
-class CityUserController extends Controller
+class SightUserController extends Controller
 {
-    public function show(CityUserRequest $request, UserFilter $filter)
+    public function show(SightUserRequest $request, UserFilter $filter)
     {
         $users = User::select()
             ->distinct()
             ->withFilter($filter)
             ->joinOn('travelings', 'users.id', 'user_id')
             ->joinOn('sights', 'travelings.sight_id', 'id')
-            ->equals('sights', 'city_id', $request->input('id'))
+            ->equals('sights', 'id', $request->input('id'))
             ->all();
 
         return json($users);

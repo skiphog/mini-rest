@@ -24,6 +24,7 @@ $route->group('/cities', static function (Router $router) {
     // GET Получить все или один город с достопримечательностями
     $router->get('/sights', 'City\CitySightController@index');
     $router->get('/{id:\d+}/sights', 'City\CitySightController@show');
+    $router->get('/{id:\d+}/users', 'City\CityuserController@show');
 });
 
 // Достопримечательности
@@ -31,6 +32,7 @@ $route->group('/sights', static function (Router $router) {
     // GET Получить все достопримечательности какие есть
     $router->get('/', 'Sight\SightController@index');
     $router->get('/{id:\d+}', 'Sight\SightController@show');
+    $router->get('/{id:\d+}/users', 'Sight\SightUserController@show');
 
     // POST Создать, Обновить, Удалить достопримечательность
     $router->post('/', 'Sight\SightController@create');

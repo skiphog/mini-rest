@@ -16,7 +16,7 @@ class SightRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'city_id'  => 'required|positive|custom:City',
+            'city_id'  => 'required|positive|custom:EntityExists~cities',
             'name'     => 'required|str|between:2,150',
             'distance' => 'required|positive'
         ];
